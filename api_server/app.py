@@ -1,14 +1,14 @@
 import json
 from flask import Flask
 from flask import request, jsonify
-from schedule import alg_fifo
+from schedule import alg_fifo, sjf
 
 app = Flask(__name__)
 
 @app.route("/")
 def hello_world():
     return 'Helloadadadkalhdkll!!'
-algorithms = {'fifo':alg_fifo, 'sjf':None,
+algorithms = {'fifo':alg_fifo, 'sjf':sjf,
 			  'rr':None, 'pjsf':None }
 response = {}
 
@@ -24,7 +24,7 @@ def sched_process():
 		return {"error": "Invalid data"}, 400
 	data = request.json
 
-	algorithm = data['algorithm'] if (data['algorithm'] in algorithms) else algorithms['fifo']
+	algorithm = data['algorithm'] if (data['algorithm'] in algorithms) else 'sjf'
 	algorithm = algorithms.get(algorithm)
 	data = algorithm(data)
 

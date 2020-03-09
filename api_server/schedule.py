@@ -70,7 +70,10 @@ def alg_fifo(data=None, debug=False):
     data['avg_turnaround_time']=_avgTurnAroundTime
 
     return data
-
-
-def sjf():
-    pass
+####
+#Autor: Juan Calos Ballesteros Romero
+def sjf(data=None):
+    proceso = data['jobs']
+    cola = []
+    
+    return data
