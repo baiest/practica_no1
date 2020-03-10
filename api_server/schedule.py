@@ -93,5 +93,70 @@ def sjf(data=None):
     ###Con los procesos ordenados se realiza el algorimo fifo
     alg_fifo(data=data, debug=None)
     
+
+def rr(data=None):
+    proceso = data['jobs']
+    cola=[]
+    cpu=data['quatum']
+    contador=[]
+    posicion=len(proceso)
+    i=0
+
+    bandera=0
+
+    for proc in proceso:
+        cola.append(proceso[i]['execution_time'])
+        contador.append(proceso[i]['execution_time'])
+        i+=1
+    i=0
+    for proc in cola:
+        contador[i]=0
+        if cola[i]<0:
+            bandera+=1
+        i+=1
+    while bandera<len(cola):
+        i=0
+        for proc in proceso:
+            if cpu > proceso[i]['execution_time']:
+                proceso[i]['execution_time']=0
+                posicion+=1
+            elif proceso[i]['execution_time']>0:
+                    proceso[i]['execution_time']-=cpu
+                    cola.append(proceso[i]['execution_time'])
+                    posicion+=1
+                    if proceso[i]['execution_time']!=0:
+                         contador[i]=posicion
+    
+            i+=1
+            
+        i=0
+        for proc in proceso:
+            if proceso[i]['execution_time']<=0:
+               bandera+=1
+               i+=1
+    i=0
+    for proc in proceso:
+        proceso[i]['execution_time']=contador[i]
+        i+=1
+
+    _avgWaitTime = 0
+    _avgResponseTime = 0
+    _avgTurnAroundTime = 0
+    count = len(proceso)
+    for proc in proceso:
+        temp = proc['execution_time']
+        _avgWaitTime += temp
+        _avgResponseTime += _avgWaitTime
+        _avgTurnAroundTime += _avgResponseTime
+
+    _avgTurnAroundTime = float(_avgTurnAroundTime) / float(count)
+    _avgWaitTime = float(_avgWaitTime) / float(count)
+    _avgResponseTime = float(_avgResponseTime) / float(count)
+
+    data['avg_wait_time']=_avgWaitTime
+    data['avg_response_time']=_avgResponseTime
+    data['avg_turnaround_time']=_avgTurnAroundTime
+
     return data
+
 

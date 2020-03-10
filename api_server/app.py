@@ -1,7 +1,7 @@
 import json
 from flask import Flask
 from flask import request, jsonify
-from schedule import alg_fifo, sjf
+from schedule import alg_fifo, sjf,rr
 
 app = Flask(__name__)
 
@@ -9,7 +9,7 @@ app = Flask(__name__)
 def hello_world():
     return 'Hello!!'
 algorithms = {'fifo':alg_fifo, 'sjf':sjf,
-			  'rr':None, 'pjsf':None }
+			  'rr':rr, 'pjsf':None }
 response = {}
 
 
