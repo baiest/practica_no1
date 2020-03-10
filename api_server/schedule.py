@@ -73,7 +73,25 @@ def alg_fifo(data=None, debug=False):
 ####
 #Autor: Juan Calos Ballesteros Romero
 def sjf(data=None):
+    ###Se ordenan los trabajos de menor a mayor tiempo de ejecucion
     proceso = data['jobs']
-    cola = []
+    cola=[]
+    guardar=[]
+    i=0
+    cola.append(proceso[0])
+    proceso.pop(0)
+    for proc in proceso:
+        if cola[i]['execution_time']<proc['execution_time']:
+            cola.append(proc)
+        else:
+            guardar=cola[i]
+            cola[i]=proc
+            cola.append(guardar)
+        i+=1
+
+    data['jobs']=cola
+    ###Con los procesos ordenados se realiza el algorimo fifo
+    alg_fifo(data=data, debug=None)
     
     return data
+

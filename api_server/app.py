@@ -7,7 +7,7 @@ app = Flask(__name__)
 
 @app.route("/")
 def hello_world():
-    return 'Helloadadadkalhdkll!!'
+    return 'Hello!!'
 algorithms = {'fifo':alg_fifo, 'sjf':sjf,
 			  'rr':None, 'pjsf':None }
 response = {}
